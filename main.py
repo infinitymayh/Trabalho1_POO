@@ -1,18 +1,37 @@
+# -> imports
 import sys
 from objects import *
 
+# -> variáveis
 help_message = ("\n \nUsage: main.py [-h] {list,task,new} ... \n \n"
 				"Manage your tasks in the command line!\n \n"
 				"Options: -h, --help  show this help message and exit\n \n"
 				"Commands: {list,task,new}\n \n")
+task_list = [""]
+list_message = ("Task list:\n"
+"================================================================================\n"
+"   ID Description                                      State     Pri. Date      \n"
++task_list[0]+
+"\n--------------------------------------------------------------------------------\n"
+"================================================================================\n")
+
+# -> verifica se foi executado apenas o "main.py", nesse caso é mandada
+#uma mensagem de inicialização
 
 if len(sys.argv) <= 1:
 	print("Command line task manager. \nRun with -h for help.")
 
+# -> código principal
+
 else:
+	
+	# > comando help <
+	
 	if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 		print(help_message)
 		exit()
+	
+	# > comando list <
 	
 	elif sys.argv[1] == "list":
 		if len(sys.argv) == 2:
