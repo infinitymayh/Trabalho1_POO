@@ -7,10 +7,10 @@ help_message = ("\n \nUsage: main.py [-h] {list,task,new} ... \n \n"
 				"Manage your tasks in the command line!\n \n"
 				"Options: -h, --help  show this help message and exit\n \n"
 				"Commands: {list,task,new}\n \n")
-task_list = {}
+task_list = {1:"lavar roupa", 2:"socorro"}
 list_message = ["Task list:\n"
 				"================================================================================\n"
-				"   ID Description                                      State     Pri. Date      \n", *task_list,
+				"   ID Description                                      State     Pri. Date      \n", *task_list.values(),
 				"\n--------------------------------------------------------------------------------\n"
 				"================================================================================\n"]
 list_help = ("\n \nUsage: todo.py list [-h] [-a] [-p {1,2,3}]\n \n"
