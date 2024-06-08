@@ -24,6 +24,7 @@ list_help2 = ("./todo.py new -h usage: todo.py new [-h] description"
 
 
 tasklist = task_list()
+tasksid = 0
 
 # -> verifica se foi executado apenas o "main.py", nesse caso é mandada
 #uma mensagem de inicialização
@@ -45,7 +46,7 @@ else:
 	
 	elif sys.argv[1] == "list":
 		if len(sys.argv) == 2:
-			print(tasklist.msg())
+			print(tasklist.msg_pending())
 		
 		else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
