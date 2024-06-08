@@ -7,18 +7,15 @@ help_message = ("\n \nUsage: main.py [-h] {list,task,new} ... \n \n"
 				"Manage your tasks in the command line!\n \n"
 				"Options: -h, --help  show this help message and exit\n \n"
 				"Commands: {list,task,new}\n \n")
-task_list = {1:"lavar roupa", 2:"socorro"}
-list_message = ["Task list:\n"
-				"================================================================================\n"
-				"   ID Description                                      State     Pri. Date      \n", *task_list.values(),
-				"\n--------------------------------------------------------------------------------\n"
-				"================================================================================\n"]
+				
 list_help = ("\n \nUsage: todo.py list [-h] [-a] [-p {1,2,3}]\n \n"
 			"List the tasks\n \n"
 			"Options:\n"
 			"  -h, --help                     Show this help message and exit\n"
 			"  -a, --all                      List all tasks, not only pendent\n"
 			"  -p {1,2,3}, --priority {1,2,3} Show tasks with a given prioriy\n \n")
+
+tasklist = task_list()
 
 # -> verifica se foi executado apenas o "main.py", nesse caso é mandada
 #uma mensagem de inicialização
@@ -40,7 +37,7 @@ else:
 	
 	elif sys.argv[1] == "list":
 		if len(sys.argv) == 2:
-			print(*list_message)
+			print(tasklist.msg())
 		
 		else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
