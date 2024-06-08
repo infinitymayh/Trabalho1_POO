@@ -1,5 +1,5 @@
 class task:
-	def __init__(self, n_id, description):
+	def __init__(self,description):
 		self._id = n_id
 		self._description = description
 		self._state = "pending"
@@ -26,3 +26,7 @@ class task_list:
 	
 	def msg(self):
 		return str(self.list_message[0]+'\n'.join(i for i in self._tasks)+self.list_message[1])
+		
+		
+
+		
