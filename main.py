@@ -46,7 +46,7 @@ else:
 	
 	elif sys.argv[1] == "list":
 		if len(sys.argv) == 2:
-			print(tasklist.msg_pending())
+			tasklist.msg_pending()
 		
 		else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
@@ -66,4 +66,10 @@ else:
 		if sys.argv[2] == "-h" or sys.argv[2] == "--help":
 				print(list_help2)
 				
-			
+		else:
+			tarefa_nova = task(tasksid, sys.argv[2])
+			tasksid += 1
+			tasklist._tasks.append(tarefa_nova)
+			print(tarefa_nova._description)
+			print(tasklist._tasks)
+			print(tasksid)
