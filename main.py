@@ -16,6 +16,7 @@ list_help = ("\n \nUsage: todo.py list [-h] [-a] [-p {1,2,3}]\n \n"
 			"  -p {1,2,3}, --priority {1,2,3} Show tasks with a given prioriy\n \n")
 
 tasklist = task_list()
+tasksid = 0
 
 # -> verifica se foi executado apenas o "main.py", nesse caso é mandada
 #uma mensagem de inicialização
@@ -37,7 +38,7 @@ else:
 	
 	elif sys.argv[1] == "list":
 		if len(sys.argv) == 2:
-			print(tasklist.msg())
+			print(tasklist.msg_pending())
 		
 		else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
