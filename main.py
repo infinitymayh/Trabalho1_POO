@@ -52,3 +52,4 @@ else:
 			
 			elif sys.argv[2] == "-p" or sys.argv[2] == "--priority":
 				print("list of priorities")
+#ola
