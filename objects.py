@@ -18,14 +18,14 @@ list_message = ["Task list:\n"
 				"================================================================================\n"]
 	
 def msg_pending():
-	tarefa,estado=carregar_tarefas(nome_arquivo)
+	tarefa,estado, prioridade, n_id=carregar_tarefas(nome_arquivo)
 	print(list_message[0])
 	for i in estado:
 		if estado[i] == "pending":
 			contagem = 0
 			for j in tarefa[i]:
 				contagem += 1
-			print("   ",i,tarefa[i]," "*(47-contagem),estado[i],"  ",)
+			print("   ",n_id[i],tarefa[i]," "*(47-contagem),estado[i],"  ",prioridade[i])
 	print(list_message[1])
 			
 	
@@ -51,14 +51,14 @@ def carregar_tarefas(nome_arquivo):
 		with open(nome_arquivo,'r') as arquivo:
 			dic = json.load(arquivo)
 			if dic != 0:
-				return dic["tarefas"],dic["estado"]
+				return dic["tarefas"],dic["estado"], dic["prioridade"],dic["id"]
 	except FileNotFoundError:
-		return {},{}
+		return {},{},{},{}
         
 #funcao para salvar as tarefas no arquivo
 
-def salvar_tarefas(tarefas,estado, nome_arquivo):
+def salvar_tarefas(tarefas,estado,prioridade,id_usados, nome_arquivo):
     with open(nome_arquivo, 'w') as arquivo:
-        json.dump({"tarefas": tarefas, "estado": estado}, arquivo)
+        json.dump({"tarefas": tarefas, "estado": estado, "prioridade": prioridade, "id": id_usados}, arquivo)
         
 

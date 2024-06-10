@@ -68,24 +68,26 @@ else:
 		
 		else:
 			nova_tarefa=sys.argv[2]
-			tarefa,estado=carregar_tarefas(nome_arquivo)
+			tarefa,estado,prioridade,id_usados=carregar_tarefas(nome_arquivo)
 			
 			# caso não exista uma lista de tarefas
 			
 			if not tarefa:
 				tarefas = {}
 				estado = {}
-
-			# criação de id usando loop	
-
-			n_id = 0
-			for i in (tarefa):
-				n_id= n_id + 1
+				prioridade = {}
+				id_usados = {}
+				n_id = 0
+				
+			if tarefa:
+				n_id=max(id_usados.values())
 
 			# salvar tarefas no arquivo
 
 			tarefa[n_id]=nova_tarefa
 			estado[n_id]="pending"
-			salvar_tarefas(tarefa,estado, nome_arquivo)
+			prioridade[n_id]=2
+			id_usados[n_id] = n_id+1
+			salvar_tarefas(tarefa,estado,prioridade, id_usados, nome_arquivo)
 
 
