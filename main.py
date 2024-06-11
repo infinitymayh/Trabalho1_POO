@@ -1,8 +1,10 @@
 # -> imports
 import sys
 from objects import *
+import pickle
 
-# -> variáveis
+
+# -> variáveis de texto
 help_message = ("\n \nUsage: main.py [-h] {list,task,new} ... \n \n"
 				"Manage your tasks in the command line!\n \n"
 				"Options:\n"
@@ -58,7 +60,7 @@ else:
 	
 	elif sys.argv[1] == "list":
 		if len(sys.argv) == 2:
-			msg_pending()
+			msg_pending(arq)
 		
 		else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
@@ -75,36 +77,21 @@ else:
 				
 	elif sys.argv[1] == "new":
 		
+		try:
+			
 		#comando de ajuda
 		
-		if sys.argv[2] == "-h" or sys.argv[2] == "--help":
+			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
 				print(new_help)
 				
 		#criando uma nova tarefa
 		
-		else:
-			nova_tarefa=sys.argv[2]
-			tarefa,estado,prioridade,id_usados=carregar_tarefas(nome_arquivo)
-			
-			# caso não exista uma lista de tarefas
-			
-			if not tarefa:
-				tarefas = {}
-				estado = {}
-				prioridade = {}
-				id_usados = {}
-				n_id = 0
+			else:
+				save_task(arq, sys.argv[2])
 				
-			if tarefa:
-				n_id=max(id_usados.values())
-
-			# salvar tarefas no arquivo
-
-			tarefa[n_id]=nova_tarefa
-			estado[n_id]="pending"
-			prioridade[n_id]=2
-			id_usados[n_id] = n_id+1
-			salvar_tarefas(tarefa,estado,prioridade, id_usados, nome_arquivo)
+		except IndexError:
+			print("\nError! The command should be followed by a description. Use -h or --help for help.")
+			
 	
 	# > comando task <
 	
@@ -113,7 +100,7 @@ else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
 				print(task_help)
 		except IndexError:
-			print("\nErro! O comando deve ser seguido do número de identificação da tarefa.")
+			print("\nError! The command should be followed by a task id. Use -h or --help for help.")
 			
 		
 			
