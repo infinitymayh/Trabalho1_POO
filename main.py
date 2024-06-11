@@ -5,8 +5,10 @@ from objects import *
 # -> variáveis
 help_message = ("\n \nUsage: main.py [-h] {list,task,new} ... \n \n"
 				"Manage your tasks in the command line!\n \n"
-				"Options: -h, --help  show this help message and exit\n \n"
-				"Commands: {list,task,new}\n \n")
+				"Options:\n"
+				 "-h, --help  show this help message and exit\n \n"
+				"Commands:\n"
+				"{list,task,new}\n \n")
 				
 list_help = ("\n \nUsage: todo.py list [-h] [-a] [-p {1,2,3}]\n \n"
 			"List the tasks\n \n"
@@ -15,10 +17,24 @@ list_help = ("\n \nUsage: todo.py list [-h] [-a] [-p {1,2,3}]\n \n"
 			"  -a, --all                      List all tasks, not only pendent\n"
 			"  -p {1,2,3}, --priority {1,2,3} Show tasks with a given prioriy\n \n")
 			
-list_help2 = ("\n\n./todo.py new -h usage: todo.py new [-h] description"
+new_help = ("\n\n./todo.py new -h usage: todo.py new [-h] description"
 			"\n\nCreate a task"
 			"\n\npositional arguments:\n  -description Create a new task"
 			"\n\noptions:\n  -h, --help show this help message and exit")
+			
+task_help = ("\n \nUsage: todo.py task [-h] [-d | -c | -r | -s SCHEDULE | -p {1,2,3}] id\n \n"
+			"Act on a task\n \n"
+			"positional arguments:\n"
+			"id                    Specify task id\n \n"
+			"options:\n"
+			"-h, --help            show this help message and exit\n"
+			"-d, --done            Mark task as done\n"
+			"-c, --cancelled       Mark task as cancelled\n"
+			"-r, --remove          Remove task\n"
+			"-s SCHEDULE, --schedule SCHEDULE\n"
+			"                       Schedule the task\n"
+			"-p {1,2,3}, --priority {1,2,3}\n"
+			"                      Change priority level")
 
 
 
@@ -62,7 +78,7 @@ else:
 		#comando de ajuda
 		
 		if sys.argv[2] == "-h" or sys.argv[2] == "--help":
-				print(list_help2)
+				print(new_help)
 				
 		#criando uma nova tarefa
 		
@@ -89,5 +105,16 @@ else:
 			prioridade[n_id]=2
 			id_usados[n_id] = n_id+1
 			salvar_tarefas(tarefa,estado,prioridade, id_usados, nome_arquivo)
-
+	
+	# > comando task <
+	
+	elif sys.argv[1] == "task":
+		try:
+			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
+				print(task_help)
+		except IndexError:
+			print("\nErro! O comando deve ser seguido do número de identificação da tarefa.")
+			
+		
+			
 

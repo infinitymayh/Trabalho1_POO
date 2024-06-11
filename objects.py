@@ -11,13 +11,13 @@ class task:
 		return self.priority
 
 
-list_message = ["Task list:\n"
+	
+def msg_pending():
+	list_message = ["Task list:\n"
 				"================================================================================\n"
 				"   ID Description                                      State     Pri. Date      \n",
 				"\n--------------------------------------------------------------------------------\n"
 				"================================================================================\n"]
-	
-def msg_pending():
 	tarefa,estado, prioridade, n_id=carregar_tarefas(nome_arquivo)
 	print(list_message[0])
 	for i in estado:
