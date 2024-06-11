@@ -3,62 +3,99 @@ class task:
 		self._id = n_id
 		self._description = description
 		self._state = "pending"
-		self.priority = 2
+		self._priority = "2"
 	
 	def priority(self, p=None):
 		if p != None:
-			self.priority = p
-		return self.priority
-
-
+			self._priority = p
+		return self._priority
+		
+	def id(self, i=None):
+		if i != None:
+			self._id = i
+		return self._id
 	
-def msg_pending():
+	def description(self, d=None):
+		if d != None:
+			self._description = d
+		return self._description
+	
+	def state(self, s=None):
+		if s != None:
+			self._state = s
+		return self._state
+
+
+# list messages ======================================================================
+
+def msg_pending(arquivo):
 	list_message = ["Task list:\n"
 				"================================================================================\n"
 				"   ID Description                                      State     Pri. Date      \n",
 				"\n--------------------------------------------------------------------------------\n"
 				"================================================================================\n"]
-	tarefa,estado, prioridade, n_id=carregar_tarefas(nome_arquivo)
-	print(list_message[0])
-	for i in estado:
-		if estado[i] == "pending":
-			contagem = 0
-			for j in tarefa[i]:
-				contagem += 1
-			print("   ",n_id[i],tarefa[i]," "*(47-contagem),estado[i],"  ",prioridade[i])
-	print(list_message[1])
-			
 	
-	def msg(self):
-		return str(self.list_message[0]+'\n'.join(i for i in self._tasks)+self.list_message[1])
+	task_list = load_tasks(arquivo)
+	if len(task_list)==0:
+		print(list_message[0],"\n \n", list_message[1])
+	else:
+		print(list_message[0])
+		for task in task_list:
+			if task.state() == "pending":
+				print("  ",task.id(),task.description(),(48-len(task.description()))*" ",task.state(),"  ",task.priority())
+		print(list_message[1])
+	
+	
 		
 		
 #=================================================================================================================
 
 # salvar as tarefas
 
-import json
+import pickle
 
 #nome do arquivo das tarefas
 
-nome_arquivo = 'tarefa.json'
-
+arq = "task_list.pkl"
 
 # funcao para abrir o arquvivo das tarefas
 
-def carregar_tarefas(nome_arquivo):
+def load_tasks(arquivo):
 	try:
-		with open(nome_arquivo,'r') as arquivo:
-			dic = json.load(arquivo)
-			if dic != 0:
-				return dic["tarefas"],dic["estado"], dic["prioridade"],dic["id"]
+		with open(arquivo,'rb') as a:
+			loaded_dic = pickle.load(a)
+			return loaded_dic["tasks_obj"]
 	except FileNotFoundError:
-		return {},{},{},{}
+		return []
         
 #funcao para salvar as tarefas no arquivo
 
-def salvar_tarefas(tarefas,estado,prioridade,id_usados, nome_arquivo):
-    with open(nome_arquivo, 'w') as arquivo:
-        json.dump({"tarefas": tarefas, "estado": estado, "prioridade": prioridade, "id": id_usados}, arquivo)
+def save_task(arquivo, description):
+	try:
+		with open(arquivo,'rb') as a:
+			loaded_dic = pickle.load(a)
+		
+		task_id = max(loaded_dic["id"])+1
+		new_task = task(task_id, description)
+		loaded_dic["tasks_obj"].append(new_task)
+		loaded_dic["id"].append(task_id)
+		
+		
+		with open(arquivo,'wb') as a:
+			pickle.dump(loaded_dic, a)
+			
+	except FileNotFoundError:
+		new_task = task(1, description)
+		initial_task_list = [new_task]
+		initial_id_list = [1]
+		
+		task_dic = {
+			"tasks_obj": initial_task_list,
+			"id": initial_id_list
+		}
+		
+		with open(arquivo, 'wb') as a:
+			pickle.dump(task_dic, a)
+	
         
 
