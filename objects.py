@@ -1,3 +1,5 @@
+# class =====================================================================
+
 class task:
 	def __init__(self,n_id, description):
 		self._id = n_id
@@ -42,12 +44,76 @@ def msg_pending(arquivo):
 		print(list_message[0])
 		for task in task_list:
 			if task.state() == "pending":
-				print("  ",task.id(),task.description(),(48-len(task.description()))*" ",task.state(),"  ",task.priority())
+				print("   ",task.id(),task.description(),(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+		print(list_message[1])
+		
+def msg_all(arquivo):
+	list_message = ["Task list:\n"
+				"================================================================================\n"
+				"   ID Description                                      State     Pri. Date      \n",
+				"\n--------------------------------------------------------------------------------\n"
+				"================================================================================\n"]
+	
+	task_list = load_tasks(arquivo)
+	if len(task_list)==0:
+		print(list_message[0],"\n \n", list_message[1])
+	else:
+		print(list_message[0])
+		for task in task_list:
+			print("   ",task.id(),task.description(),(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
 		print(list_message[1])
 	
+def msg_by_priority(arquivo, p):
+	list_message = ["Task list:\n"
+				"================================================================================\n"
+				"   ID Description                                      State     Pri. Date      \n",
+				"\n--------------------------------------------------------------------------------\n"
+				"================================================================================\n"]
 	
+	task_list = load_tasks(arquivo)
+	if len(task_list)==0:
+		print(list_message[0],"\n \n", list_message[1])
+	else:
+		print(list_message[0])
+		for task in task_list:
+			if task.priority() == p:
+				print("   ",task.id(),task.description(),(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+		print(list_message[1])
 		
+# task messages ====================================================================================
 		
+def show_task(arquivo, task_id):
+	task_list = load_tasks(arquivo)
+	for tasks in task_list:
+		if tasks.id() == task_id:
+			print(f"\nTask {task_id}: {tasks.description()}\nState: {tasks.state()}\nPriority: {tasks.priority()}")
+			
+def new_state(arquivo, task_id, state):
+	with open(arquivo,'rb') as a:
+			loaded_dic = pickle.load(a)
+			for tasks in loaded_dic["tasks_obj"]:
+				if tasks.id() == task_id:
+					tasks.state(state)
+	with open(arquivo, "wb") as a:
+		pickle.dump(loaded_dic, a)
+		
+def remove_task(arquivo, task_id):
+	with open(arquivo,'rb') as a:
+			loaded_dic = pickle.load(a)
+			for tasks in loaded_dic["tasks_obj"]:
+				if tasks.id() == task_id:
+					loaded_dic["tasks_obj"].remove(tasks)
+	with open(arquivo, "wb") as a:
+		pickle.dump(loaded_dic, a)
+		
+def new_priority(arquivo, task_id, priority):
+	with open(arquivo,'rb') as a:
+			loaded_dic = pickle.load(a)
+			for tasks in loaded_dic["tasks_obj"]:
+				if tasks.id() == task_id:
+					tasks.priority(priority)
+	with open(arquivo, "wb") as a:
+		pickle.dump(loaded_dic, a)
 #=================================================================================================================
 
 # salvar as tarefas

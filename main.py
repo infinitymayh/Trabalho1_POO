@@ -50,11 +50,11 @@ if len(sys.argv) <= 1:
 
 else:
 	
+	
 	# > comando help <
 	
 	if sys.argv[1] == "-h" or sys.argv[1] == "--help":
 		print(help_message)
-		exit()
 	
 	# > comando list <
 	
@@ -65,14 +65,16 @@ else:
 		else:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
 				print(list_help)
-				exit()
 			
 			elif sys.argv[2] == "-a" or sys.argv[2] == "--all":
-				print("list of all")
+				msg_all(arq)
 			
 			elif sys.argv[2] == "-p" or sys.argv[2] == "--priority":
-				print("list of priorities")
-				
+				try:
+					msg_by_priority(arq, sys.argv[3])
+				except IndexError:
+					print("\nError! The command should be followed by a priority number {1, 2, 3}. Use 'list -h' or 'list --help' for help.")
+					
 	# > comando new <
 				
 	elif sys.argv[1] == "new":
@@ -99,8 +101,29 @@ else:
 		try:
 			if sys.argv[2] == "-h" or sys.argv[2] == "--help":
 				print(task_help)
+				
+			elif len(sys.argv) == 3:
+					show_task(arq, int(sys.argv[2]))
+				
+			elif sys.argv[3] == "-d" or sys.argv[3] == "--done":
+					new_state(arq, int(sys.argv[2]), "done")
+					
+			elif sys.argv[3] == "-c" or sys.argv[3] == "--cancelled":
+					new_state(arq, int(sys.argv[2]), "cancelled")
+				
+			elif sys.argv[3] == "-r" or sys.argv[3] == "--remove":
+					remove_task(arq, int(sys.argv[2]))
+					
+			elif sys.argv[3] == "-p" or sys.argv[3] == "--priority":
+					if int(sys.argv[4]) not in range(0,4):
+						raise IndexError("The priority needs to be 1, 2 or 3.")
+						
+					else:
+						new_priority(arq, int(sys.argv[2]), sys.argv[4])
+			
 		except IndexError:
-			print("\nError! The command should be followed by a task id. Use -h or --help for help.")
+			raise
+			print("\nError! The command should be followed by a existing task id. Use -h or --help for help.")
 			
 		
 			
