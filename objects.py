@@ -44,7 +44,7 @@ def msg_pending(arquivo):
 		print(list_message[0])
 		for task in task_list:
 			if task.state() == "pending":
-				print("   ",task.id(),task.description(),(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+				print("   ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
 		print(list_message[1])
 		
 def msg_all(arquivo):
@@ -60,7 +60,7 @@ def msg_all(arquivo):
 	else:
 		print(list_message[0])
 		for task in task_list:
-			print("   ",task.id(),task.description(),(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+			print("   ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
 		print(list_message[1])
 	
 def msg_by_priority(arquivo, p):
@@ -77,7 +77,7 @@ def msg_by_priority(arquivo, p):
 		print(list_message[0])
 		for task in task_list:
 			if task.priority() == p:
-				print("   ",task.id(),task.description(),(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+				print("   ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
 		print(list_message[1])
 		
 # task messages ====================================================================================
