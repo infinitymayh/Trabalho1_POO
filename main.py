@@ -3,7 +3,6 @@ import sys
 from objects import *
 import pickle
 
-
 # -> variáveis de texto
 help_message = ("\n \nUsage: main.py [-h] {list,task,new} ... \n \n"
 				"Manage your tasks in the command line!\n \n"
@@ -120,6 +119,12 @@ else:
 						
 					else:
 						new_priority(arq, int(sys.argv[2]), sys.argv[4])
+			
+			elif sys.argv[3] == "-s" or sys.argv[3] == "--schedule":
+					try:
+						set_date(arq, int(sys.argv[2]), sys.argv[4])
+					except ValueError:
+						print("\nError! The command '-s' should be followed by a date in format YEAR-MONTH-DAY (YYYY-MM-DD).")
 			
 		except IndexError:
 			raise

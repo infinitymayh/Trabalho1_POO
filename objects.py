@@ -1,3 +1,5 @@
+from datetime import datetime
+
 # class =====================================================================
 
 class task:
@@ -6,6 +8,7 @@ class task:
 		self._description = description
 		self._state = "pending"
 		self._priority = "2"
+		self._date = ""
 	
 	def priority(self, p=None):
 		if p != None:
@@ -26,6 +29,11 @@ class task:
 		if s != None:
 			self._state = s
 		return self._state
+		
+	def date(self, dt=None):
+		if dt != None:
+			self._date = dt
+		return self._date
 
 
 # list messages ======================================================================
@@ -34,24 +42,24 @@ def msg_pending(arquivo):
 	list_message = ["Task list:\n"
 				"================================================================================\n"
 				"   ID Description                                      State     Pri. Date      \n",
-				"\n--------------------------------------------------------------------------------\n"
+				"--------------------------------------------------------------------------------\n"
 				"================================================================================\n"]
 	
 	task_list = load_tasks(arquivo)
 	if len(task_list)==0:
-		print(list_message[0],"\n \n", list_message[1])
+		print(list_message[0],list_message[1])
 	else:
 		print(list_message[0])
 		for task in task_list:
 			if task.state() == "pending":
-				print("   ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+				print((4-len(str(task.id())))*" ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority()," ",task.date())
 		print(list_message[1])
 		
 def msg_all(arquivo):
 	list_message = ["Task list:\n"
 				"================================================================================\n"
 				"   ID Description                                      State     Pri. Date      \n",
-				"\n--------------------------------------------------------------------------------\n"
+				"--------------------------------------------------------------------------------\n"
 				"================================================================================\n"]
 	
 	task_list = load_tasks(arquivo)
@@ -60,14 +68,14 @@ def msg_all(arquivo):
 	else:
 		print(list_message[0])
 		for task in task_list:
-			print("   ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+			print((4-len(str(task.id())))*" ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority()," ",task.date())
 		print(list_message[1])
 	
 def msg_by_priority(arquivo, p):
 	list_message = ["Task list:\n"
 				"================================================================================\n"
 				"   ID Description                                      State     Pri. Date      \n",
-				"\n--------------------------------------------------------------------------------\n"
+				"--------------------------------------------------------------------------------\n"
 				"================================================================================\n"]
 	
 	task_list = load_tasks(arquivo)
@@ -77,7 +85,7 @@ def msg_by_priority(arquivo, p):
 		print(list_message[0])
 		for task in task_list:
 			if task.priority() == p:
-				print("   ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority())
+				print((4-len(str(task.id())))*" ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority()," ",task.date())
 		print(list_message[1])
 		
 # task messages ====================================================================================
@@ -114,6 +122,20 @@ def new_priority(arquivo, task_id, priority):
 					tasks.priority(priority)
 	with open(arquivo, "wb") as a:
 		pickle.dump(loaded_dic, a)
+
+def set_date(arquivo, task_id, date):
+	
+	date_time = datetime.strptime(date, "%Y-%m-%d")
+	date = date_time.date()
+	with open(arquivo,'rb') as a:
+			loaded_dic = pickle.load(a)
+			for tasks in loaded_dic["tasks_obj"]:
+				if tasks.id() == task_id:
+					tasks.date(date)
+	with open(arquivo, "wb") as a:
+		pickle.dump(loaded_dic, a)
+	
+	
 #=================================================================================================================
 
 # salvar as tarefas
