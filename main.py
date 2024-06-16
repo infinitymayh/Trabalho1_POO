@@ -72,7 +72,9 @@ else:
 				try:
 					msg_by_priority(arq, sys.argv[3])
 				except IndexError:
-					print("\nError! The command should be followed by a priority number {1, 2, 3}. Use 'list -h' or 'list --help' for help.")
+					print("\nError! The command should be followed by"
+						" a priority number {1, 2, 3}. Use 'list -h' "
+						"or 'list --help' for help.")
 					
 	# > comando new <
 				
@@ -91,7 +93,8 @@ else:
 				save_task(arq, sys.argv[2])
 				
 		except IndexError:
-			print("\nError! The command should be followed by a description. Use -h or --help for help.")
+			print("\nError! The command should be followed by a "
+				"description. Use -h or --help for help.")
 			
 	
 	# > comando task <
@@ -115,7 +118,8 @@ else:
 					
 			elif sys.argv[3] == "-p" or sys.argv[3] == "--priority":
 					if int(sys.argv[4]) not in range(0,4):
-						raise IndexError("The priority needs to be 1, 2 or 3.")
+						raise IndexError("The priority needs to be"
+										"1, 2 or 3.")
 						
 					else:
 						new_priority(arq, int(sys.argv[2]), sys.argv[4])
@@ -124,12 +128,16 @@ else:
 					try:
 						set_date(arq, int(sys.argv[2]), sys.argv[4])
 					except ValueError:
-						print("\nError! The command '-s' should be followed by a date in format YEAR-MONTH-DAY (YYYY-MM-DD).")
+						print("\nError! The command '-s' should be"
+							"followed by a date in format "
+							"YEAR-MONTH-DAY (YYYY-MM-DD).")
 			
 		except IndexError:
 			raise
-			print("\nError! The command should be followed by a existing task id. Use -h or --help for help.")
+			print("\nError! The command should be followed by a "
+				"existing task id. Use -h or --help for help.")
 			
-		
+	else:
+		raise IndexError(f"There is no '{sys.argv[1]}' command.")
 			
 
