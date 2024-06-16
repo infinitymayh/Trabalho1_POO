@@ -53,7 +53,15 @@ else:
 	# > comando help <
 	
 	if sys.argv[1] == "-h" or sys.argv[1] == "--help":
-		print(help_message)
+		if len(sys.argv) == 2:
+			print(help_message)
+		else:
+			if sys.argv[2] == "list":
+				print(list_help)
+			elif sys.argv[2] == "new":
+				print(new_help)
+			elif sys.argv[1] == "task":
+				print(task_help)
 	
 	# > comando list <
 	
