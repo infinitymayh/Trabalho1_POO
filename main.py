@@ -18,7 +18,7 @@ Commands:
 LIST_HELP = """
 Usage: todo.py list [-h] [-a] [-p {1,2,3}]
 
-List the tasks
+List the tasks (if alone, list only pending)
 
 Options:
   -h, --help                     Show this help message and exit
@@ -29,7 +29,7 @@ Options:
 NEW_HELP = """
 Usage: todo.py new [-h] description
 
-Create a task
+Create a new task with the description given
 
 Positional arguments:
   - description Create a new task
@@ -39,9 +39,9 @@ Options:
 """
 
 TASK_HELP = """
-Usage: todo.py task [-h] [-d | -c | -r | -s SCHEDULE | -p {1,2,3}] id
+Usage: todo.py task [-h] id [-d | -c | -r | -s SCHEDULE | -p {1,2,3}]
 
-Act on a task
+Act on a given task
 
 Positional arguments:
   - id Specify task id
