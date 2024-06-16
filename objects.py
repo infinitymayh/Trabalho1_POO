@@ -1,7 +1,3 @@
-from datetime import datetime
-
-# class =====================================================================
-
 class task:
 	def __init__(self,n_id, description):
 		self._id = n_id
@@ -36,7 +32,7 @@ class task:
 		return self._date
 
 
-# list messages ======================================================================
+# list messages =======================================================
 
 def msg_pending(arquivo):
 	list_message = ["Task list:\n"
@@ -88,43 +84,61 @@ def msg_by_priority(arquivo, p):
 				print((4-len(str(task.id())))*" ",task.id(),task.description()[:47],(47-len(task.description()))*" ",task.state(),(9-len(task.state()))*" ",task.priority()," ",task.date())
 		print(list_message[1])
 		
-# task messages ====================================================================================
+# task command =======================================================
+from datetime import datetime
+
 		
 def show_task(arquivo, task_id):
 	task_list = load_tasks(arquivo)
+	exist = False
 	for tasks in task_list:
 		if tasks.id() == task_id:
 			print(f"\nTask {task_id}: {tasks.description()}\nState: {tasks.state()}\nPriority: {tasks.priority()}")
+			exist = True
+	if exist == False:
+		raise IndexError
 			
 def new_state(arquivo, task_id, state):
+	exist = False
 	with open(arquivo,'rb') as a:
 			loaded_dic = pickle.load(a)
 			for tasks in loaded_dic["tasks_obj"]:
 				if tasks.id() == task_id:
 					tasks.state(state)
+					exist = True
+	if exist == False:
+		raise IndexError
 	with open(arquivo, "wb") as a:
 		pickle.dump(loaded_dic, a)
 		
 def remove_task(arquivo, task_id):
+	exist = False
 	with open(arquivo,'rb') as a:
 			loaded_dic = pickle.load(a)
 			for tasks in loaded_dic["tasks_obj"]:
 				if tasks.id() == task_id:
 					loaded_dic["tasks_obj"].remove(tasks)
+					exist = True
+	if exist == False:
+		raise IndexError
 	with open(arquivo, "wb") as a:
 		pickle.dump(loaded_dic, a)
 		
 def new_priority(arquivo, task_id, priority):
+	exist = False
 	with open(arquivo,'rb') as a:
 			loaded_dic = pickle.load(a)
 			for tasks in loaded_dic["tasks_obj"]:
 				if tasks.id() == task_id:
 					tasks.priority(priority)
+					exist = True
+	if exist == False:
+		raise IndexError
 	with open(arquivo, "wb") as a:
 		pickle.dump(loaded_dic, a)
 
 def set_date(arquivo, task_id, date):
-	
+	exist = False
 	date_time = datetime.strptime(date, "%Y-%m-%d")
 	date = date_time.date()
 	with open(arquivo,'rb') as a:
@@ -132,22 +146,21 @@ def set_date(arquivo, task_id, date):
 			for tasks in loaded_dic["tasks_obj"]:
 				if tasks.id() == task_id:
 					tasks.date(date)
+					exist = True
+	if exist == False:
+		raise IndexError
 	with open(arquivo, "wb") as a:
 		pickle.dump(loaded_dic, a)
 	
 	
-#=================================================================================================================
-
-# salvar as tarefas
-
+#saving tasks =========================================================
 import pickle
 
-#nome do arquivo das tarefas
+#tasks file name
 
 arq = "task_list.pkl"
 
-# funcao para abrir o arquvivo das tarefas
-
+#loading tasks file
 def load_tasks(arquivo):
 	try:
 		with open(arquivo,'rb') as a:
@@ -156,7 +169,7 @@ def load_tasks(arquivo):
 	except FileNotFoundError:
 		return []
         
-#funcao para salvar as tarefas no arquivo
+#saving tasks on file
 
 def save_task(arquivo, description):
 	try:
